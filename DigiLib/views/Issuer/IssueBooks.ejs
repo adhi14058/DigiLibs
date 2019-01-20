@@ -1,0 +1,18 @@
+<%include ../partials/header%>
+<form action='/digiIssuer/issue' method="post">
+    <label >Roll_number</label>
+    <input type="text" name='roll_number'>
+
+    <label >unique id number</label>
+    <input type="text" name='identification_number'>
+
+    <label>Student or staff</label>
+    <select name="option" id="">
+        <option value="student">student</option>
+        <option value="Teacher">teacher</option>
+    </select>
+    
+
+    <button type="submit">submit</button>
+</form>
+<%include ../partials/footer%>

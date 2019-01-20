@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.css" />
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.js"></script>
+
+
+
+    <title>Document</title>
+    <style>
+        .pad {
+            padding-right: 7px !important;
+            padding-left: 7px !important;
+        }
+
+        body {
+            /* background: grey; */
+            background: linear-gradient(to right, #e4675f 0%, #68c1d1 100%);
+        }
+        .lol {
+            height: 500px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="ui inverted stackable big menu">
+        <div class=" item ui ">
+            <div class="ui inverted button">
+                <i style="font-size:1.5em;" class="book icon"></i>DiGiLiBs
+            </div>
+        </div>
+        <div class="right menu">
+            <div class="item pad">
+                <div class="ui inverted mini red button">welcome Adhi</div>
+            </div>
+            <div class="item pad">
+                <div onclick="c()" class="ui inverted mini blue button">GT-Books</div>
+            </div>
+            <div class="item pad">
+                <div class="ui inverted mini orange button ">LOGIN</div>
+            </div>
+            <div class="item pad">
+                <div class="ui inverted mini green button">LOGOUT</div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+
+
+
+    <div style="margin:10px auto; text-align: center">
+        <div class="ui massive breadcrumb">
+            <button style="padding:10px" class="section ui inverted blue button huge disabled">Get Roll_Number</button>
+            <i class="right chevron icon divider"></i>
+            <button style="padding:10px" class="section ui  red button huge ">Get Roll_Number</button>
+        </div>
+
+    </div>
+
+
+
+
+    <div style="width:400px; margin-bottom: 40px;" class="ui centered card">
+        <div class="image">
+            <img src="https://images.all-free-download.com/images/graphiclarge/student_and_education_logo_free_download_6820451.jpg">
+        </div>
+        <div class="content ui inverted">
+            <h3 class=" ui centered huge blue header">Adhi narayan baskaran</h3>
+            <span class=" ui medium black header">Roll Number:&ensp;&ensp;&ensp;&ensp;CB.EN.U4CSE16001</span>
+            <span class=" ui medium black header">Email
+                Id:&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;adhi14058@gmail.com</span>
+            <span class=" ui medium black header">Phone Number:&ensp;&ensp;9597942781</span>
+        </div>
+    </div>
+
+
+
+
+    <form action="">
+
+            <div style="border:3px solid black;  background: linear-gradient(to right,#68c1d1  0%,#e4675f  100%);" class="ui black segment">
+                    <h1 class="ui huge centered  header"> ISSUE BOOKS</h1>
+                    <div style=" width:60%; margin:0 auto;" class="ui inverted form">
+                      <div class="two fields">
+                        <div style="width:100%"  class=" ui centered field">
+                                <div class="ui action input">
+                                        <!-- <input type="text" placeholder="Search..."> -->
+                                        <div style="width:100%"  class="ui form">
+                                                <div class="field">
+                                                  <select   class="ui search dropdown">
+                                                    <option value="">Select Unique Book ID</option>
+                                                    <option value="AF">Afghanistan</option>
+                                                    <option value="AX">Åland Islands</option>
+                                                    <option value="AL">Albania</option>                                    
+                                                  </select>
+                                                </div>
+                                              </div>
+                                        <button type="sumbit" class="ui button large violet">Search</button>
+                                </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div style="width:400px; margin-bottom: 40px;" class="ui centered card">
+                            <div class="image">
+                                <img src="https://cdn4.vectorstock.com/i/1000x1000/71/28/logo-girl-reading-a-book-vector-4227128.jpg">
+                            </div>
+                            <div class="content ui inverted">
+                                <h3 class=" ui centered huge blue header">Book Name</h3>
+                                <span class=" ui medium black header">ISBN:&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;Book_ISBN</span>
+                                <span class=" ui medium black header">Book_id:&ensp;&ensp;&ensp;Book_ID</span>
+                                <span class=" ui medium black header">Author:&ensp;&ensp;&ensp;&ensp;Book_Author</span>
+                                <span class=" ui medium black header">Publisher:&ensp;&ensp;Book_Publisher</span>
+                            </div>
+                            <form style='text-align: center;'action="">
+                                    <button style="margin:0 auto;" type="sumbit" class="disabled  ui centered button large violet">Give Him</button>
+                            </form>
+                        </div>
+                        
+                  </div>
+    </form>
+
+
+    
+
+
+    <div style="   width:70%; margin: 80px auto;">
+        <h1 class="ui huge centered  header">BOOKS TAKEN</h1>
+        <div class="cards">
+            <div class="ui two column grid">
+                <% for(i=1;i<=9;i++){%>
+                <div class="column">
+                    <div class="ui fluid card lol">
+                        <div class="image">
+                            <img style="height:400px;" src="http://codex.cs.yale.edu/avi/os-book/OSE1/images/os8e-cover.jpg">
+                        </div>
+                        <div class="content">
+                            <a class="header">Daniel Louise</a>
+                            <p></p>
+                            <div style="margin:10px auto; text-align:center;" class="ui buttons">
+                                <form action="">
+                                    <button class="ui inverted green button">Return</button>
+                                </form>
+
+                                <form action="">
+                                    <button class="ui blue inverted button ">ReIssue</button>
+                                </form>
+
+                                <form action="">
+                                    <button class="ui red inverted button">LostIt</button>
+                                </form>
+                                <form action="">
+                                    <button class="ui purple inverted button">Show</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <%}%>
+
+
+            </div>
+
+        </div>
+    </div>
+
+
+
+   
+
+
+
+
+</body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<form action="">
+    <div class="ui modal test">
+        <i class="close icon"></i>
+        <div class="header">
+            <div class="ui massive breadcrumb">
+                <button style="padding:10px; margin-left:50px" class="section ui blue button huge">Get Roll_Number</button>
+                <i class="right chevron icon divider"></i>
+                <button style="padding:10px" class="section ui inverted red button huge disabled ">Get Roll_Number</button>
+            </div>
+        </div>
+
+        <div class="image content">
+            <div class="ui medium image">
+                <img src="https://semantic-ui.com/images/avatar2/large/rachel.png">
+            </div>
+            <div class="description">
+                <div class="ui header"></div>
+
+                <div style="height:250px; width:240%; padding-top:30px;" class="ui inverted segment">
+                    <div class="ui inverted form">
+                        <div class="two fields">
+                            <div style="width: 100%;" class="field">
+                                <label>Roll Number:</label>
+                                <input style="margin-bottom:25px;" placeholder="First Name" type="text">
+                                <p></p>
+                                <p></p>
+                                <p></p>
+                                <label>User</label>
+                                <select class="ui fluid dropdown" name="" id="">
+                                    <option value="student">Student</option>
+                                    <option value="teacher">Teacher</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="actions">
+            <div class="ui black deny button">
+                Back
+            </div>
+            <div class="ui positive right labeled icon button">
+                Next
+                <i class="checkmark icon"></i>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+<script>
+    function c() {
+        console.log('hi')
+        $(".test").modal('show');
+    }
+</script>
+
+</html>
+
+<!-- <div class="ui three bottom attached buttons">
+                                        <div class="ui  red button">
+                                            Return
+                                        </div>
+                                        <div class="ui  green button">
+                                                Re-Issue
+                                            </div>
+                                            <div class="ui  blue button">
+                                                    Lost-It
+                                                </div>
+    
+                                    </div>
+                                </div> -->
