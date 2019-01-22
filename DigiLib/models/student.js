@@ -10,6 +10,12 @@ var studentSchema= new mongoose.Schema({
             type:mongoose.Schema.Types.ObjectId,
             ref:"BookReference2"
         }
+    ],
+    BorrowedBooks1:[
+        {
+            type:mongoose.Schema.Types.ObjectId,
+            ref:"BookReference1"
+        }
     ]
 });
 var Student=mongoose.model("Student",studentSchema);

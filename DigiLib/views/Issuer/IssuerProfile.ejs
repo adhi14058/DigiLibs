@@ -1,2 +1,100 @@
 <%include ../partials/header%>
+
+
+<!-- <form action="/digiIssuer" method="POST">
+    
+    <div class="ui test">
+        <i class="close icon"></i>
+        <div class="header">
+            <div class="ui massive breadcrumb">
+                <button style="padding:10px; margin-left:50px" class="section ui blue button huge">Get Roll_Number</button>
+                <i class="right chevron icon divider"></i>
+                <button style="padding:10px" class="section ui inverted red button huge disabled ">Get Roll_Number</button>
+            </div>
+        </div>
+
+       
+                <img width="300px" src="https://semantic-ui.com/images/avatar2/large/rachel.png">
+            
+            <div class="description" style="width:50%; display: inline-block;">
+                <div class="ui header"></div>
+
+                <div style="height:250px; width:100%; display: inline-block; padding-top:30px;" class="ui inverted segment">
+                    <div class="ui inverted form">
+                        <div class="two fields">
+                            <div style="width: 100%;" class="field">
+                             
+                                <label>Roll Number:</label>
+                                <input style="margin-bottom:25px;" name="rollno" placeholder="First Name" type="text">
+                                <p></p>
+                                <p></p>
+                                <p></p>
+                                <label>User</label>
+                                <select class="ui fluid dropdown" name="check" id="">
+                                    <option value="student">Student</option>
+                                    <option value="teacher">Teacher</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+        <div class="actions">
+                 <button type="submit" class="ui black deny button">back</button> 
+                <button class="ui positive right labeled icon button" type="submit">submit</button>
+                <i class="checkmark icon"></i>
+        </div>
+    </div>
+</form>
+<p></p><p></p> -->
+
+<div style="margin-top:30px;width:100%; background: linear-gradient(to right, #e4675f 0%, #68c1d1 100%);text-align:center;">
+    <div style="width:100%; background: linear-gradient(to right, #e4675f 0%, #68c1d1 100%);"  class="ui massive breadcrumb centered">
+        <button style="padding:10px; " class="section ui blue button huge">Get Roll_Number</button>
+        <i class="right chevron icon divider"></i>
+        <button style="padding:10px" class="section ui inverted red button huge disabled ">Get Roll_Number</button>
+    </div>
+</div> 
+<p style="clear:both;"></p>
+ <div style="clear:both; width: 90%; margin: 0 auto;">
+    <img width="30%" height="400px" style="float: left;" src="https://semantic-ui.com/images/avatar2/large/rachel.png">
+    <div style="padding: 30px; height: 400px; width:70%; float: right; margin:0;" class="ui inverted segment">
+        <div class="ui inverted form">
+            <div class="two fields">
+                <div style="width: 100%;" class="field">
+                    <h2 style="margin-bottom:40px">Enter credentials</h2>
+                    <form action="/digiIssuer" method="POST">
+                    <label>Roll Number:</label>
+                    <input style="margin-bottom:25px;" name="rollno" placeholder="First Name" type="text">
+                    <p></p>
+                    <p></p>
+                    <p></p>
+                    <label>User</label>
+                    <select style="margin-bottom:70px;" class="ui fluid dropdown" name="check" id="">
+                        <option value="student">Student</option>
+                        <option value="teacher">Teacher</option>
+                    </select>
+                    <input name="submit" value="Back" type="submit" class="ui large orange button" style="width:48.5%; float: left">
+                    <input name="submit" value="Submit" type="submit" class="ui large green button" style="width:50%; float:right ;">
+                </form>
+                </div>
+            </div>
+        </div>
+    </div>
+   
+    
+</div>
+
+
+
+
+
+
+<script>
+    function c() {
+        console.log('hi')
+        $(".test").modal('show');
+    }
+</script>
 <%include ../partials/footer%>

@@ -36,7 +36,7 @@ router.post('/login',passport.authenticate("local",{
     successRedirect:'/',
     failureRedirect:'/login',
 }),function(req,res){
-    console.log(req.body);
+    // console.log(req.body);
 })
 
 router.get('/logout',function(req,res){
@@ -68,18 +68,133 @@ router.get('/digiAdmin',function(req,res){
 //ISSUER
 
 router.get('/digiIssuer',function(req,res){
-    res.render('Issuer/IssuerProfile')
+    
+    res.render('issuer/issuerProfile');
+
+    
+})
+router.post('/digiIssuer',function(req,res){
+
+    if (req.body.submit=="Submit"){
+                if (req.body.check=="student"){
+                    Student.findOne({Roll_no:req.body.rollno},function(err,st){
+                                    if(err){
+                                        console.log(err)
+                                    }
+                                    else
+                                    {  
+                                        //  console.log(req.body)
+                                        BookReference2.find({In_status:1},function(err,books){
+                                        //  console.log(st)
+                                        res.redirect('/bookissue/'+st._id)
+                                        
+                                        
+                                        })
+                                    
+                                    }                     
+                                })
+                    }
+                else{
+                // Teacher.findOne({Faculty_no:req.body.rollno},function(err,st){
+                //     if(err){
+                //         console.log(err)
+                //     }
+                //     else
+                //     {  BookReference2.find({In_status:1},function(err,books){
+
+                    
+                //        res.render("example",{st:st,books:books})
+                //     })
+                //     }
+                // })
+                }
+            }
+            else{
+                res.redirect("back");
+            }
 })
 
-router.get('/digiIssuer/issue',function(req,res){
-    res.render('Issuer/IssueBooks')
+router.get('/bookissue/:stid',function(req,res){
+    BookReference2.find({In_status:1},function(err,books){
+        Student.findById(req.params.stid).populate('BorrowedBooks').populate('BorrowedBooks1').exec(function(err,stu){
+
+                res.render("index/example",{st:stu,books:books,step:1})
+        })
+    })
 })
 
-router.post('/digiIssuer/issue',function(req,res){
-    res.send('The books will be issued on your name '+req.body.option)
-    // res.redirect('/digiIssuer')
+router.post('/bookissue/:stid',function(req,res){
+    BookReference2.findOne({Identification_no:req.body.unique_id},function(err,bookref2){
+        BookReference1.findOne({ISBN:bookref2.ISBN},function(err,bookref1){
+            BookReference2.find({In_status:1},function(err,books){
+                 Student.findById(req.params.stid,function(err,st){
+                    // console.log('==================================')
+                    // console.log(req.params)
+                    // console.log(bookref2)
+                    // console.log(books[0])
+                    // console.log(bookref1)
+                    // console.log('=================================')
+                    res.redirect('/bookissue/'+st._id+'/'+bookref1._id+'/'+bookref2._id)
+                   
+                 })
+             })
+        })
+    })
+})
+router.get('/bookissue/:sid/:b1id/:b2id',function(req,res){
+        Student.findById(req.params.sid).populate('BorrowedBooks').populate('BorrowedBooks1').exec(function(err,stu){
+
+            BookReference1.findById(req.params.b1id,function(err,b1){
+                BookReference2.findById(req.params.b2id,function(err,b2){
+                    BookReference2.find({In_status:1},function(err,books){
+                        res.render("index/example",{st:stu,bookref1:b1,bookref2:b2,books:books,step:2})
+                    })
+                })
+            })
+        })
 })
 
+// router.get('/digiIssuer/issue',function(req,res){
+//     res.render('Issuer/IssueBooks')
+// })
+
+    router.post('/bookIssue/:sid/:b1id/:b2id',function(req,res){
+        Student.findById(req.params.sid,function(err,stu){
+            BookReference1.findById(req.params.b1id,function(err,bookr1){
+                BookReference2.findById(req.params.b2id,function(err,bookr2){
+                    var numberOfDaysToAdd = 15;
+                    d= new Date();
+                    PresentlyBorrow.create({
+                        Identification_no:bookr2.Identification_no,
+                        Rack_id:bookr2.Rack_id,
+                        Date_when_borrowed: new Date(),
+                        Expected_return_date:d.setDate(d.getDate() + numberOfDaysToAdd),
+                        InTheHandsOfStudent:stu._id
+
+                    },function(err,prbr){
+                        if(err){
+                            console.log(err)
+                        }else{
+                            stu.BorrowedBooks.push(bookr2._id);
+                            stu.BorrowedBooks1.push(bookr1._id);
+                            stu.save();
+                            bookr2.InTheHandsOfStudent=stu._id;
+                            bookr2.In_status=0;
+                            bookr2.save();
+                            bookr1.No_books_borrowed+=1;
+                            bookr1.No_times_book_borrowed+=1;
+                            bookr1.No_books_inside_library-=1;
+                            bookr1.save();
+                            res.redirect('/bookissue/'+stu._id)
+                        }
+                    })
+                })
+            })
+        })
+    })
+
+
+  
 //=======================================================================
 //=======================================================================
 //=======================================================================
@@ -171,8 +286,5 @@ router.post('/register',function(req,res){
 //         })
 //     }
  })
-router.get('/example',function(req,res){
-    res.render('index/example');
-})
 
 module.exports=router;

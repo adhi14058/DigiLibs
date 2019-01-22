@@ -6,26 +6,47 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.css" />
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.js"></script>
+    <style>
+        .pad {
+            padding-right: 7px !important;
+            padding-left: 7px !important;
+        }
 
+        body {
+            /* background: grey; */
+            background: linear-gradient(to right, #e4675f 0%, #68c1d1 100%);
+        }
+        .lol {
+            height: 500px;
+        }
+    </style>
 </head>
 <body>
     <body>
-        <nav class="navbar navbar-default">
-            <div class="fluid-container">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="/">DigiLibs</a>
-                </div>
-                <div class="collapse navbar-collapse">
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a href="/digiStudentProfile">student Profile</a></li>
-                        <li><a href="/digiTeacherProfile">Teacher Profile</a></li>
-                        <li><a href="/digiAdmin">Admin</a></li>
-                        <li><a href="/digiIssuer">Issuer</a></li>
-                        <li><a href="/register">sign up</a></li>
-                        <li><a href="/login">login</a></li>
-                        <li><a href="/logout">logout</a></li>
-                    </ul>
+        <div style="margin-bottom:0" class="ui inverted stackable big menu">
+            <div class=" item ui ">
+                <div class="ui inverted button">
+                    <i style="font-size:1.5em;" class="book icon"></i>DiGiLiBs
                 </div>
             </div>
-        </nav>
+            <div class="right menu">
+                <div class="item pad">
+                    <div class="ui inverted mini red button">welcome Adhi</div>
+                </div>
+                <div class="item pad">
+                    <div onclick="c()" class="ui inverted mini blue button">GT-Books</div>
+                </div>
+                <div class="item pad">
+                    <div class="ui inverted mini orange button ">LOGIN</div>
+                </div>
+                <div class="item pad">
+                    <div class="ui inverted mini green button">LOGOUT</div>
+                </div>
+    
+            </div>
+        </div>
     
