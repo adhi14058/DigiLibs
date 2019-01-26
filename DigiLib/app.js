@@ -6,7 +6,7 @@ var bodyParser=require("body-parser");
 app.use(bodyParser.urlencoded({extended: true}));
 
 var mongoose=require("mongoose");
-mongoose.connect("mongodb://localhost/Librarymanagement");
+mongoose.connect("mongodb://localhost/Librarymanagement",{ useNewUrlParser: true });
 var url = "mongodb://localhost:27017/";
 app.set("view engine","ejs");
 
@@ -42,8 +42,10 @@ passport.deserializeUser(User.deserializeUser());
 //roues
 
 var indexRoute=require('./routes/index')
+var issuerRoute=require('./routes/issuer')
 
 app.use(indexRoute);
+app.use(issuerRoute);
 
 
 

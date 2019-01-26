@@ -12,6 +12,16 @@ var presentlyborrowSchema= new mongoose.Schema({
         type:mongoose.Schema.Types.ObjectId,
         ref:"Teacher"
     },
+    bookRef1:
+        {
+            type:mongoose.Schema.Types.ObjectId,
+            ref:"BookReference2"
+        },
+    bookRef2:
+        {
+            type:mongoose.Schema.Types.ObjectId,
+            ref:"BookReference1"
+        },
 
     Fine:Number
 });

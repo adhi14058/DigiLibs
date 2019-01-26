@@ -2,11 +2,28 @@ var mongoose=require('mongoose');
 var borrowhistorySchema= new mongoose.Schema({
     Identification_no:String,//unique number for each book
     Rack_id:String,
-    Id_no_who_borrowed_book:String, // id_no as it can be both faculty as well as student bcoz its a common table
     Date_when_borrowed:Date,
     Actual_return_date:Date,
     Expected_return_date:Date,
-    Fine:Number
+    Fine:Number,
+    bookRef1:
+        {
+            type:mongoose.Schema.Types.ObjectId,
+            ref:"BookReference2"
+        },
+    bookRef2:
+        {
+            type:mongoose.Schema.Types.ObjectId,
+            ref:"BookReference1"
+        },
+        InTheHandsOfStudent:{
+            type:mongoose.Schema.Types.ObjectId,
+            ref:"Student"
+        },
+        InTheHandsOfTeacher:{
+            type:mongoose.Schema.Types.ObjectId,
+            ref:"Teacher"
+        }
 });
 var BorrowHistory= mongoose.model("BorrowHistory",borrowhistorySchema);
 module.exports=BorrowHistory;
