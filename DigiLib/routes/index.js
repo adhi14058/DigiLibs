@@ -58,29 +58,9 @@ router.get('/digiTeacherProfile', function (req, res) {
 router.get('/digiAdmin', function (req, res) {
     res.render('profile/admin')
 })
+ 
 //=======================================================================
-//ISSUER
- // Display dates from borrow history
-  router.get('/ss',function(req,res){
-   
-    BookReference1.find({},function(err,books){
-        books.forEach(function(book){
-            book.No_books_present=book.No_books_bought;
-            book.No_books_lost=0;
-            book.No_books_borrowed=0;
-            book.No_books_inside_library=book.No_books_bought;
-            book.No_times_book_borrowed=0;
-            book.save();
-        })
-        console.log("done")
-    })
 
-
-    
-})  
-//=======================================================================
-//=======================================================================
-//=======================================================================
 //registering student and teacher passwords
 
 
@@ -88,26 +68,39 @@ router.get('/register',function(req,res){
     res.render('index/register');    
 })
 
+router.get('/showbook',function(req,res){
+    res.render('index/example_show_book')
+})
+
+
+// console.log(json2)
 router.get('/ct',function(req,res){
     Student.deleteMany({},function(){})
     BookReference1.deleteMany({},function(){})
     BookReference2.deleteMany({},function(){})
+    BorrowHistory.deleteMany({},function(){})
+    PresentlyBorrow.deleteMany({},function(){})
+    LostBooks.deleteMany({},function(){})
     res.redirect('/')
 })
 
-router.post('/register',function(req,res){
-    console.log(req.body);
-    obj=req.body;
-    for (var prop in obj) {
-        // console.log((obj[prop]))
-        console.log(typeof(prop))
-        if(obj[prop] == ''){
-            delete obj[prop];
-        }
-        console.log(obj.prop)
-    }
+// router.post('/register',function(req,res){
+    // console.log(req.body);
+    // obj=req.body;
+    // for (var prop in obj) {
+    //     // console.log((obj[prop]))
+    //     console.log(typeof(prop))
+    //     if(obj[prop] == ''){
+    //         delete obj[prop];
+    //     }
+    //     console.log(obj.prop)
+    // }
  
-    console.log(obj);
+    // console.log(obj);
+
+
+
+    
 //     var newUserUsername;
 //     if (req.body.check=="student"){
 //         Student.findOne({Roll_no:req.body.username},function(err,st){
@@ -135,7 +128,38 @@ router.post('/register',function(req,res){
 //             })
 //         })
 
-//     }else{
+//     }else if(req.body.check=="issuer"){
+//         newUserUsername=new User({
+//             username:req.body.username,
+//         });
+//         var newUserPassword=req.body.password;
+//         User.register(newUserUsername,newUserPassword,function(err,user){
+//             if(err){
+//                 console.log(err)
+//                 return res.redirect('/')
+//             }
+//             passport.authenticate('local')(req,res,function(){
+//                 res.redirect('/register')
+//             })
+//         })
+//     }
+//     else if(req.body.check=="admin"){
+//         newUserUsername=new User({
+//             username:req.body.username,
+//         });
+//         var newUserPassword=req.body.password;
+//         User.register(newUserUsername,newUserPassword,function(err,user){
+//             if(err){
+//                 console.log(err)
+//                 return res.redirect('/')
+//             }
+//             passport.authenticate('local')(req,res,function(){
+//                 res.redirect('/register')
+//             })
+//         })
+//     }
+    
+//     else{
 //         Teacher.findOne({Faculty_no:req.body.username},function(err,st){
 //             if(err){
 //                 res.send('error')
@@ -160,6 +184,6 @@ router.post('/register',function(req,res){
 //             })
 //         })
 //     }
- })
+//  })
 
 module.exports=router;

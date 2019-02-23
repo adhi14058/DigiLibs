@@ -34,18 +34,42 @@
                 </div>
             </div>
             <div class="right menu">
+            <% if(userLoggedIn) {%>
+            <% if(userLoggedIn.username=="admin") {%>
+            <div class="item pad">
+            <a class="ui inverted mini red button">welcome admin</a>
+        </div>
+            <%}%>
+            <% if(userLoggedIn.username=="issuer") {%>
+            <div class="item pad">
+            <a class="ui inverted mini red button">welcome Issuer</a>
+        </div>
+            <%}%>
+            <% if(userLoggedIn.student) {%>
+            <div class="item pad">
+            <a class="ui inverted mini red button">welcome <%=loggedInStudent%></a>
+        </div>
+            <%}%>
+            <% if(userLoggedIn.teacher) {%>
+            <div class="item pad">
+            <a class="ui inverted mini red button">welcome <%=loggedInTeacher%></a>
+        </div>
+            <%}%>
+                <%}%>
+                <% if(userLoggedIn && userLoggedIn.username=="issuer") {%>
                 <div class="item pad">
-                    <a class="ui inverted mini red button">welcome Adhi</a>
+                    <a class="ui inverted mini blue button" href="/digiIssuer/issue/Credentials">GT-BOOKS</a>
                 </div>
-                <div class="item pad">
-                    <a class="ui inverted mini blue button" href="/digiIssuer/issue/Credentials">GT-Books</a>
-                </div>
+                <%}%>
+                <% if(!userLoggedIn) {%>
                 <div class="item pad">
                   <a class="ui inverted mini orange button " href="/login">LOGIN</a>
                 </div>
+                <%} else {%>
                 <div class="item pad">
                     <a class="ui inverted mini green button" href="/logout">LOGOUT</a>
                 </div>
+                <%}%>
     
             </div>
         </div>

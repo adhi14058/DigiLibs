@@ -39,10 +39,29 @@ passport.use(new localStrategy(User.authenticate()))
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 // ==============================================
-//roues
+//routes
+
 
 var indexRoute=require('./routes/index')
 var issuerRoute=require('./routes/issuer')
+
+app.use(function(req,res,next){
+    console.log(req.user)
+    res.locals.userLoggedIn=req.user;
+    if(req.user && req.user.student){
+        Student.findById(req.user.student,function(err,stu){
+            res.locals.loggedInStudent=stu.St_name;
+            next();
+        })
+    }else if(req.user && req.user.teacher){
+        Teacher.findById(req.user.student,function(err,teacher){
+            res.locals.loggedInTeacher=teacher.Fa_name;
+            next()
+        })
+    }else{
+    next();
+    }
+})
 
 app.use(indexRoute);
 app.use(issuerRoute);
