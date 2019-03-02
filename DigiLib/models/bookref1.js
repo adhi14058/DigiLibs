@@ -13,8 +13,10 @@ var bookReference1Schema= new mongoose.Schema({
     No_books_present:Number,
     No_books_lost:Number,
     No_books_borrowed:Number,
+    No_books_reserved:Number,
     No_books_inside_library:Number,
-    No_times_book_borrowed:Number
+    No_times_book_borrowed:Number,
+    ReserveCount:Number //0-->not reserved     //add 1 on each reserve 
 });
 var BookReference1=mongoose.model("BookReference1",bookReference1Schema);
 module.exports=BookReference1;

@@ -44,17 +44,19 @@ passport.deserializeUser(User.deserializeUser());
 
 var indexRoute=require('./routes/index')
 var issuerRoute=require('./routes/issuer')
+var bookSearch=require('./routes/bookSearchAndReserve')
 
 app.use(function(req,res,next){
-    console.log(req.user)
     res.locals.userLoggedIn=req.user;
+   
     if(req.user && req.user.student){
         Student.findById(req.user.student,function(err,stu){
             res.locals.loggedInStudent=stu.St_name;
+           
             next();
         })
     }else if(req.user && req.user.teacher){
-        Teacher.findById(req.user.student,function(err,teacher){
+        Teacher.findById(req.user.teacher,function(err,teacher){
             res.locals.loggedInTeacher=teacher.Fa_name;
             next()
         })
@@ -65,6 +67,7 @@ app.use(function(req,res,next){
 
 app.use(indexRoute);
 app.use(issuerRoute);
+app.use(bookSearch)
 
 
 

@@ -61,6 +61,23 @@ router.get('/digiAdmin', function (req, res) {
  
 //=======================================================================
 
+router.get('/studentdetails',function(req,res){
+    Student.find({},function(err,student){
+       res.render("index/studentdetails",{student:student,step:1})
+    })    
+})
+router.get('/bookdetails',function(req,res){
+    BookReference1.find({},function(err,stu){
+       res.render("index/bookdetails",{book:stu,step:1})
+    })    
+})
+
+router.get('/teacherdetails',function(req,res){
+    Teacher.find({},function(err,stu){
+       res.render("index/teacherdetails",{teacher:stu,step:1})
+    })    
+})
+
 //registering student and teacher passwords
 
 
@@ -83,9 +100,7 @@ router.get('/ct',function(req,res){
     LostBooks.deleteMany({},function(){})
     res.redirect('/')
 })
-
-// router.post('/register',function(req,res){
-    // console.log(req.body);
+  // console.log(req.body);
     // obj=req.body;
     // for (var prop in obj) {
     //     // console.log((obj[prop]))
@@ -97,93 +112,102 @@ router.get('/ct',function(req,res){
     // }
  
     // console.log(obj);
+router.get('/register',function(req,res){
+    res.render('index/register')
+})
 
+router.post('/register',function(req,res){
 
-
-    
-//     var newUserUsername;
-//     if (req.body.check=="student"){
-//         Student.findOne({Roll_no:req.body.username},function(err,st){
-//             if(err){
-//                 console.log(err)
-//             }
-//             console.log((st))
+    var newUserUsername;
+    if (req.body.check=="student"){
+        Student.findOne({Roll_no:req.body.username},function(err,st){
+            if(err){
+                console.log(err)
+            }
+            console.log((st))
      
-//                 newUserUsername=new User({
-//                 username:req.body.username,
-//                 student:st._id,
-//                 // teacher:st._id,
-//             });
-//             // console.log(newUserUsername)
-//             var newUserPassword=req.body.password;
-//             User.register(newUserUsername,newUserPassword,function(err,user){
-//                 if(err){
-//                     console.log(err)
-//                     return res.redirect('/')
-//                 }
-//                 passport.authenticate('local')(req,res,function(){
-//                     // console.log(user)
-//                     res.redirect('/register')
-//                 })
-//             })
-//         })
+                newUserUsername=new User({
+                username:req.body.username,
+                student:st._id,
+                // teacher:st._id,
+            });
+            // console.log(newUserUsername)
+            var newUserPassword=req.body.password;
+            User.register(newUserUsername,newUserPassword,function(err,user){
+                if(err){
+                    console.log(err)
+                    return res.redirect('/')
+                }
+                passport.authenticate('local')(req,res,function(){
+                    // console.log(user)
+                    res.redirect('/register')
+                })
+            })
+        })
 
-//     }else if(req.body.check=="issuer"){
-//         newUserUsername=new User({
-//             username:req.body.username,
-//         });
-//         var newUserPassword=req.body.password;
-//         User.register(newUserUsername,newUserPassword,function(err,user){
-//             if(err){
-//                 console.log(err)
-//                 return res.redirect('/')
-//             }
-//             passport.authenticate('local')(req,res,function(){
-//                 res.redirect('/register')
-//             })
-//         })
-//     }
-//     else if(req.body.check=="admin"){
-//         newUserUsername=new User({
-//             username:req.body.username,
-//         });
-//         var newUserPassword=req.body.password;
-//         User.register(newUserUsername,newUserPassword,function(err,user){
-//             if(err){
-//                 console.log(err)
-//                 return res.redirect('/')
-//             }
-//             passport.authenticate('local')(req,res,function(){
-//                 res.redirect('/register')
-//             })
-//         })
-//     }
+    }else if(req.body.check=="issuer"){
+        newUserUsername=new User({
+            username:req.body.username,
+        });
+        var newUserPassword=req.body.password;
+        User.register(newUserUsername,newUserPassword,function(err,user){
+            if(err){
+                console.log(err)
+                return res.redirect('/')
+            }
+            passport.authenticate('local')(req,res,function(){
+                res.redirect('/register')
+            })
+        })
+    }
+    else if(req.body.check=="admin"){
+        newUserUsername=new User({
+            username:req.body.username,
+        });
+        var newUserPassword=req.body.password;
+        User.register(newUserUsername,newUserPassword,function(err,user){
+            if(err){
+                console.log(err)
+                return res.redirect('/')
+            }
+            passport.authenticate('local')(req,res,function(){
+                res.redirect('/register')
+            })
+        })
+    }
     
-//     else{
-//         Teacher.findOne({Faculty_no:req.body.username},function(err,st){
-//             if(err){
-//                 res.send('error')
-//             }
-//             console.log((st))
+    else{
+        Teacher.findOne({Faculty_no:req.body.username},function(err,st){
+            if(err){
+                res.send('error')
+            }
+            console.log((st))
      
-//                  newUserUsername=new User({
-//                 username:req.body.username,
-//                 teacher:st._id,
-//             });
-//             // console.log(newUserUsername)
-//             var newUserPassword=req.body.password;
-//             User.register(newUserUsername,newUserPassword,function(err,user){
-//                 if(err){
-//                     console.log(err)
-//                     return res.redirect('/')
-//                 }
-//                 passport.authenticate('local')(req,res,function(){
-//                     // console.log(user)
-//                     res.redirect('/register')
-//                 })
-//             })
-//         })
-//     }
+                 newUserUsername=new User({
+                username:req.body.username,
+                teacher:st._id,
+            });
+            // console.log(newUserUsername)
+            var newUserPassword=req.body.password;
+            User.register(newUserUsername,newUserPassword,function(err,user){
+                if(err){
+                    console.log(err)
+                    return res.redirect('/')
+                }
+                passport.authenticate('local')(req,res,function(){
+                    // console.log(user)
+                    res.redirect('/register')
+                })
+            })
+        })
+    }
+ })
+
+//  router.get('/using',function(req,res){
+//      BookReference1.updateMany({},{"$set": {ReserveCount:0}},function(err,b1){
+//          console.log(b1)
+//          res.redirect('/')
+//      })
 //  })
 
 module.exports=router;

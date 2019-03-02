@@ -10,6 +10,7 @@
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
         crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
     <style>
         .pad {
             padding-right: 7px !important;
@@ -27,17 +28,17 @@
 </head>
 <body>
     <body>
-        <div style="margin-bottom:0" class="ui inverted stackable big menu">
+        <div style="margin-bottom:0; position:absolute; top:0px; z-index:3; width:100%" class="ui inverted stackable big menu">
             <div class=" item ui ">
                 <div class="ui  button">
-                    <i style="font-size:1.5em;" class="book icon"></i>DiGiLiBs
+                    <a href='/'><i style="font-size:1.5em;" class="book icon"></i>DiGiLiBs</a>
                 </div>
             </div>
             <div class="right menu">
             <% if(userLoggedIn) {%>
             <% if(userLoggedIn.username=="admin") {%>
             <div class="item pad">
-            <a class="ui inverted mini red button">welcome admin</a>
+            <a href='/digiAdmin' class="ui inverted mini red button">welcome admin</a>
         </div>
             <%}%>
             <% if(userLoggedIn.username=="issuer") {%>
@@ -59,6 +60,9 @@
                 <% if(userLoggedIn && userLoggedIn.username=="issuer") {%>
                 <div class="item pad">
                     <a class="ui inverted mini blue button" href="/digiIssuer/issue/Credentials">GT-BOOKS</a>
+                </div>
+                <div class="item pad">
+                    <a class="ui inverted mini blue button" href="/digiIssuer/reserve/Credentials">RESERVED-BOOKS</a>
                 </div>
                 <%}%>
                 <% if(!userLoggedIn) {%>

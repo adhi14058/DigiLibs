@@ -1,6 +1,5 @@
 var mongoose=require('mongoose');
 var reserved_bookSchema =new mongoose.Schema({
-    Id_no:String,  // id_no as it can be both faculty as well as student bcoz its a common table
     Identification_no:String,//unique number for each book
     Date_when_reserved:Date,
     bookRef1:
@@ -20,7 +19,8 @@ var reserved_bookSchema =new mongoose.Schema({
         InTheHandsOfTeacher:{
             type:mongoose.Schema.Types.ObjectId,
             ref:"Teacher"
-        }
+        },
+        status:Number //book not inside lib-->1  //book inside but not given to stu --> 2   //book given to student-->3
 });
 var Reserved_Book= mongoose.model("Reserved_Book",reserved_bookSchema);
 module.exports=Reserved_Book;

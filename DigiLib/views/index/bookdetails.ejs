@@ -1,0 +1,62 @@
+<%include ../partials/header%>
+ 
+  <div class="container" style="margin-top:70px;">
+    <div class="ui segment">
+      <form action="">
+        <h3 class="ui header">SEARCH USING</h3>
+        <h3 class="ui header">NAME</h3>
+        <!-- <br> -->
+        <!-- <br> -->
+        <div class="ui icon input" style="width:100%;">
+          <input type="text" placeholder="Search...">
+          <i class="search icon"></i>
+        </div>
+        <br>
+        <br>
+        <h3 class="ui header">AUTHOR</h3>
+        <!-- <br> -->
+        <!-- <br> -->
+        <div class="ui icon input" style="width:100%;">
+          <input type="text" placeholder="Search...">
+          <i class="search icon"></i>
+        </div>
+        <br>
+        <br>
+        <h3 class="ui header">BOOK ID</h3>
+        <!-- <br> -->
+        <!-- <br> -->
+        <div class="ui icon input" style="width:100%;">
+          <input type="text" placeholder="Search...">
+          <i class="search icon"></i>
+        </div>
+        <br>
+        <br>
+        <button class="ui button">SUBMIT</button>
+      </form>
+      <div class="ui section divider"></div>
+      <br>
+      <table class="ui padded table">
+        <thead>
+          <tr>
+            <th>ISBN</th>
+            <th>BOOK NAME</th>
+            <th>AUTHOR NAME</th>
+            <th>BOOK EDITION</th>
+          </tr>
+        </thead>
+        <tbody>
+                <% book.forEach(function(st){ %>
+                    <tr>
+                        <td><%= st.ISBN %></td>
+                        <td><%= st.Book_name %></td>
+                        <td><%= st.Author_name %></td>
+                        <td><%= st.Book_edition %></td>
+                    </tr>
+                      <% }) %>
+          
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+  <%include ../partials/footer%>

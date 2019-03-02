@@ -17,7 +17,6 @@ var studentSchema= new mongoose.Schema({
             ref:"BookReference1"
         }
     ]
-    
 });
 var Student=mongoose.model("Student",studentSchema);
 
