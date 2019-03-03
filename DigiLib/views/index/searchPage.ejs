@@ -56,9 +56,9 @@
                     }
                   })
                 }
-                  if(rb==[]){
-                  rb.bookRef1.forEach(function(b){
-                    if(b.ISBN==st.ISBN){
+                  if(rb!=[]){
+                  rb.forEach(function(b){
+                    if(b.bookRef1.ISBN==st.ISBN){
                       f2=1
                     }
                   })
@@ -71,7 +71,7 @@
                         <td><%= st.Book_edition %></td>
                         <td><%= st.No_books_inside_library %></td>
                         <% if(st.No_books_inside_library==0 && f1==0 && f2==0){ %>
-                        <td><form method="POST" action="/digiSearch"><button type="submit" class='ui button green'>reserve</button></form></td>
+                        <td><form method="POST" action="/digiSearch/<%=st._id%>"><button type="submit" class='ui button green'>reserve</button></form></td>
                         <%}else if(f1==1){%>
                         <td><a class='disabled ui button red'>You have Taken</a></td>
                         <%}else if(f2==1){%>

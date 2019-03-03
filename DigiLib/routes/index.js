@@ -93,6 +93,7 @@ router.get('/showbook',function(req,res){
 // console.log(json2)
 router.get('/ct',function(req,res){
     Student.deleteMany({},function(){})
+    Teacher.deleteMany({},function(){})
     BookReference1.deleteMany({},function(){})
     BookReference2.deleteMany({},function(){})
     BorrowHistory.deleteMany({},function(){})
@@ -203,11 +204,11 @@ router.post('/register',function(req,res){
     }
  })
 
-//  router.get('/using',function(req,res){
-//      BookReference1.updateMany({},{"$set": {ReserveCount:0}},function(err,b1){
-//          console.log(b1)
-//          res.redirect('/')
-//      })
-//  })
+ router.get('/using',function(req,res){
+     BookReference1.updateMany({},{"$set": {ReserveCount:0,No_books_reserved:0}},function(err,b1){
+         console.log(b1)
+         res.redirect('/')
+     })
+ })
 
 module.exports=router;

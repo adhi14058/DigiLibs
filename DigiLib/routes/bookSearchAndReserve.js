@@ -28,17 +28,17 @@ router.get('/digiSearch',function(req,res){
             if(req.user && req.user.student){
                 Student.findById(req.user.student).populate('BorrowedBooks').populate('BorrowedBooks1').exec(function(err,stu){
                     Reserved_Book.find({status:{$in:[1,2]}, InTheHandsOfStudent:stu._id}).populate('bookRef1').populate('InTheHandsOfStudent').exec(function(err,rb){
-                        res.render('index/searchPage',{book:b1,user:stu,rb:rb})
+                        res.render('index/searchPage',{book:b1,user:stu,rb:rb,SorT:'s'})
                     })
                 })
             }else if(req.user && req.user.teacher){
                 Teacher.findById(req.user.teacher).populate('BorrowedBooks').populate('BorrowedBooks1').exec(function(err,teacher){
                     Reserved_Book.find({status:{$in:[1,2]},InTheHandsOfTeacher:teacher._id}).populate('bookRef1').populate('InTheHandsOfTeacher').exec(function(err,rb){
-                        res.render('index/searchPage',{book:b1,user:teacher,rb:rb})
+                        res.render('index/searchPage',{book:b1,user:teacher,rb:rb,SorT:'t'})
                     })
                 })
             }else{
-                res.redirect('/')
+                res.redirect('/login')
             }
       
         }
@@ -46,8 +46,34 @@ router.get('/digiSearch',function(req,res){
     
 })
 
-router.post('/digiSearch',function(req,res){
-
+router.post('/digiSearch/:b1id',function(req,res){
+    console.log('h1')
+    Reserved_Book.create({
+        status:1,
+        bookRef1:req.params.b1id
+    },function(err,nrb){
+        if(req.user && req.user.student){
+            Student.findById(req.user.student).populate('BorrowedBooks').populate('BorrowedBooks1').exec(function(err,stu){
+                nrb.InTheHandsOfStudent=stu._id;
+                nrb.save();
+                BookReference1.findById(req.params.b1id,function(err,book1){
+                    book1.ReserveCount+=1;
+                    book1.save();
+                    res.redirect('/digiSearch')
+                })
+            })
+        }else if(req.user && req.user.teacher){
+            Teacher.findById(req.user.teacher).populate('BorrowedBooks').populate('BorrowedBooks1').exec(function(err,teacher){
+                nrb.InTheHandsOfTeacher=teacher._id;
+                nrb.save();
+                BookReference1.findById(req.params.b1id,function(err,book1){
+                    book1.ReserveCount+=1;
+                    book1.save();
+                    res.redirect('/digiSearch')
+                })
+            })
+        }
+    })
 })
 
 

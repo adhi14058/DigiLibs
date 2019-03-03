@@ -76,6 +76,10 @@ router.post('/digiIssuer/issue/Credentials', function (req, res) {
 //=================================================================================
 //=================================================================================
 //=================================================================================
+//=================================================================================
+//=================================================================================
+//=================================================================================
+//=================================================================================
 
 //Reserve books show page
 
@@ -126,7 +130,8 @@ router.post('/digiIssuer/reserve/Credentials', function (req, res) {
 
 router.get('/digiIssuer/reserveTeacher/:tid',function(req,res){
     Teacher.findById(req.params.tid).populate('BorrowedBooks').populate('BorrowedBooks1').exec(function(err,stu){
-        Reserved_Book.find({status:2,InTheHandsOfTeacher:req.params.tid}).sort({Identification_no: 'asc'}).exec(function(err,books){
+        Reserved_Book.find({status:2,InTheHandsOfTeacher:req.params.tid}).sort({Identification_no: 'asc'}).populate('bookRef1').populate('bookRef2').exec(function(err,books){
+            console.log(books)
             PresentlyBorrow.find({InTheHandsOfTeacher:stu._id},function(err,pb){
                 pb.forEach(function(tuple){
                     now=new Date()
@@ -150,6 +155,7 @@ router.get('/digiIssuer/reserveTeacher/:tid',function(req,res){
 })
 
 router.post('/digiIssuer/reserveTeacher/:tid',function(req,res){
+    console.log('inside')
     BookReference2.findOne({Identification_no:req.body.unique_id},function(err,bookref2){
         if(!bookref2){
             return res.redirect("back");
@@ -251,6 +257,7 @@ router.post('/digiIssuer/reserveTeacher/:sid/:b1id/:b2id',function(req,res){
                         bookr1.save();
                         Reserved_Book.findOne({InTheHandsOfTeacher:stu._id, bookRef1:bookr1._id, bookRef2:bookr2._id , status:{$ne: 3}},function(err,rb){
                             rb.status=3;
+                            rb.save();
                             res.redirect('/digiIssuer/reserveTeacher/'+stu._id)
                         })
                     }
@@ -263,7 +270,10 @@ router.post('/digiIssuer/reserveTeacher/:sid/:b1id/:b2id',function(req,res){
 })
 
 
-
+//=================================================================================
+//=================================================================================
+//=================================================================================
+//=================================================================================
 //=================================================================================
 //=================================================================================
 //=================================================================================
@@ -476,13 +486,11 @@ router.post('/digiIssuer/returnTeacher/:sid/:b1id/:b2id',function(req,res){
                         stu.BorrowedBooks.splice(stu.BorrowedBooks.indexOf(bookr2._id),1);
                         stu.BorrowedBooks1.splice(stu.BorrowedBooks1.indexOf(bookr1._id),1);
                         stu.save();
-                        bookr2["InTheHandsOfTeacher"]=undefined;
-                        bookr2.Fine=undefined;
-                        bookr2.save();
-                        bookr1.No_books_borrowed-=1;
-                        bookr1.No_books_reserved+=1;
-                        bookr1.save();
-                        if(bookr1.ReserveCount==0){             
+                        if(bookr1.ReserveCount==0){     
+                                bookr2["InTheHandsOfTeacher"]=undefined;
+                                bookr2.Fine=undefined;
+                                bookr1.No_books_borrowed-=1;
+                                bookr1.No_books_reserved+=1;       
                         bookr2.In_status=1;
                         bookr2.save();
                         bookr1.No_books_inside_library+=1;
@@ -493,11 +501,16 @@ router.post('/digiIssuer/returnTeacher/:sid/:b1id/:b2id',function(req,res){
                             if(err){
                                 console.log(err)
                             }else{
+                                bookr2["InTheHandsOfTeacher"]=undefined;
+                                bookr2.Fine=undefined;
+                                bookr1.No_books_borrowed-=1;
+                                bookr1.No_books_reserved+=1; 
                             rb.bookRef2=bookr2._id;
                             rb.status=2;
                             rb.save();
                             bookr1.ReserveCount-=1;
                             bookr1.save();
+                            console.log(bookr1.ReserveCount)
                             bookr2.In_status=2;
                             bookr2.save();
                             res.redirect('/digiIssuer/issueTeacher/'+stu._id)
@@ -558,7 +571,10 @@ router.post('/digiIssuer/lostTeacher/:sid/:b1id/:b2id',function(req,res){
 //==============================================================================
 //==============================================================================
 //==============================================================================
-
+//=================================================================================
+//=================================================================================
+//=================================================================================
+//=================================================================================
 
 //issuer display student page
 router.get('/digiIssuer/issue/:stid',function(req,res){

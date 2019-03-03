@@ -22,11 +22,11 @@
             <img src="https://images.all-free-download.com/images/graphiclarge/student_and_education_logo_free_download_6820451.jpg">
         </div>
         <div class="content ui inverted">
-            <h3 class=" ui centered huge blue header"><%= st.St_name %></h3>
-            <span class=" ui medium black header">Roll Number:&ensp;&ensp;&ensp;&ensp;<%= st.Roll_no %></span>
+            <h3 class=" ui centered huge blue header"><%= st.Fa_name %></h3>
+            <span class=" ui medium black header">Roll Number:&ensp;&ensp;&ensp;&ensp;<%= st.Faculty_no %></span>
             <span class=" ui medium black header">Email
-                Id:&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;<%= st.St_email %></span>
-            <span class=" ui medium black header">Phone Number:&ensp;&ensp;<%= st.St_phone_no %></span>
+                Id:&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;<%= st.Fa_email %></span>
+            <span class=" ui medium black header">Phone Number:&ensp;&ensp;<%= st.Fa_phone_no %></span>
         </div>
     </div>
 
@@ -34,7 +34,7 @@
 
   <!-- SEARCH BOOK BAR -->
     <% if(st.BorrowedBooks.length==5){ %>
-        <form autocomplete="off" action="/digiIssuer/issue/<%=st._id%>"method ="POST">
+        <form autocomplete="off" action="/digiIssuer/reserveTeacher/<%=st._id%>"method ="POST">
 
             <div style="border:3px solid black;  background: linear-gradient(to right,#68c1d1  0%,#e4675f  100%);" class="ui black segment">
                     <h1 class="ui huge centered  header"> ISSUE BOOKS</h1>
@@ -58,7 +58,7 @@
         </div>
     </form>
     <%}else{%>
-        <form autocomplete="off" action="/digiIssuer/issue/<%=st._id%>"method ="POST">
+        <form autocomplete="off" action="/digiIssuer/reserveTeacher/<%=st._id%>"method ="POST">
 
             <div style="border:3px solid black;  background: linear-gradient(to right,#68c1d1  0%,#e4675f  100%);" class="ui black segment">
                     <h1 class="ui huge centered  header"> ISSUE BOOKS</h1>
@@ -72,8 +72,8 @@
                                                 <input style="width:100%;" list="identification_numbers" placeholder="identification number"  name="unique_id" />
                                                   <datalist  id="identification_numbers">
                                                                             
-                                                     <% books.forEach(function(book){ %> 
-                                                    <option value="<%=book.Identification_no%>"><%=book.Identification_no%></option>  
+                                                     <% books.forEach(function(book){%> 
+                                                    <option value="<%=book.bookRef2.Identification_no%>"><%=book.bookRef2.Identification_no%></option>  
                                                      <%}) %>  
                                                   </datalist>
                                                 </div>
@@ -104,7 +104,7 @@
             <span class=" ui medium black header">Publisher: &ensp;&ensp;<% if (step != 2 && step != 3){ %>Book_Publisher<%}else{%> <%=bookref1.Publisher_name %>  <%}%></span>
         </div>
         <% if (step != 3){ %>
-        <form style='text-align: center;' <% if (step == 2){ %>  action="/digiIssuer/issue/<%=st._id%>/<%=bookref1._id%>/<%=bookref2._id%>" method="post"  <%}%>  >
+        <form style='text-align: center;' <% if (step == 2){ %>  action="/digiIssuer/reserveTeacher/<%=st._id%>/<%=bookref1._id%>/<%=bookref2._id%>" method="post"  <%}%>  >
                 <button style="margin:0 auto; width: 100%;" type="submit" class=" <% if (step != 2){ %>disabled <%}%> ui centered button large violet">Issue</button>
         </form>
         <%}else{%>
