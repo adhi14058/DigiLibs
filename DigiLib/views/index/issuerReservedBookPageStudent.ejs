@@ -34,7 +34,7 @@
 
   <!-- SEARCH BOOK BAR -->
     <% if(st.BorrowedBooks.length==5){ %>
-        <form autocomplete="off" action="/digiIssuer/issue/<%=st._id%>"method ="POST">
+        <form autocomplete="off" action="/digiIssuer/reserveStudent/<%=st._id%>"method ="POST">
 
             <div style="border:3px solid black;  background: linear-gradient(to right,#68c1d1  0%,#e4675f  100%);" class="ui black segment">
                     <h1 class="ui huge centered  header"> ISSUE BOOKS</h1>
@@ -58,7 +58,7 @@
         </div>
     </form>
     <%}else{%>
-        <form autocomplete="off" action="/digiIssuer/issue/<%=st._id%>"method ="POST">
+        <form autocomplete="off" action="/digiIssuer/reserveStudent/<%=st._id%>"method ="POST">
 
             <div style="border:3px solid black;  background: linear-gradient(to right,#68c1d1  0%,#e4675f  100%);" class="ui black segment">
                     <h1 class="ui huge centered  header"> ISSUE BOOKS</h1>
@@ -72,9 +72,9 @@
                                                 <input style="width:100%;" list="identification_numbers" placeholder="identification number"  name="unique_id" />
                                                   <datalist  id="identification_numbers">
                                                                             
-                                                     <% books.forEach(function(book){ %> 
-                                                    <option value="<%=book.Identification_no%>"><%=book.Identification_no%></option>  
-                                                     <%}) %>  
+                                                  <% books.forEach(function(book){%> 
+                                                  <option value="<%=book.bookRef2.Identification_no%>"><%=book.bookRef2.Identification_no%></option>  
+                                                   <%}) %>   
                                                   </datalist>
                                                 </div>
                                               </div>
@@ -104,7 +104,7 @@
             <span class=" ui medium black header">Publisher: &ensp;&ensp;<% if (step != 2 && step != 3){ %>Book_Publisher<%}else{%> <%=bookref1.Publisher_name %>  <%}%></span>
         </div>
         <% if (step != 3){ %>
-        <form style='text-align: center;' <% if (step == 2){ %>  action="/digiIssuer/issue/<%=st._id%>/<%=bookref1._id%>/<%=bookref2._id%>" method="post"  <%}%>  >
+        <form style='text-align: center;' <% if (step == 2){ %>  action="/digiIssuer/reserveStudent/<%=st._id%>/<%=bookref1._id%>/<%=bookref2._id%>" method="post"  <%}%>  >
                 <button style="margin:0 auto; width: 100%;" type="submit" class=" <% if (step != 2){ %>disabled <%}%> ui centered button large violet">Issue</button>
         </form>
         <%}else{%>
@@ -151,22 +151,7 @@
                                         <span class=" ui medium black header">Publisher:&ensp;&ensp;&ensp;<%=st.BorrowedBooks1[j].Publisher_name%></span>
                                         <span <%if(book.Fine>0){%>style="color:red;"<%}else{%>style="color:green;"<%}%> class=" ui medium black header">Fine:&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;<%=book.Fine%> Rs</span>
                                         <p></p>
-                                        <div style="margin:10px auto; text-align:center;" class="ui buttons">
-                                            <form method="post" action="/digiIssuer/return/<%=st._id%>/<%=st.BorrowedBooks1[j]._id%>/<%=book._id%>">
-                                                <button class="ui inverted green button">Return</button>
-                                            </form>
-            
-                                            <form method="post" action="/digiIssuer/reissue/<%=st._id%>/<%=st.BorrowedBooks1[j]._id%>/<%=book._id%>">
-                                                <button type="submit" class="ui blue inverted button ">ReIssue</button>
-                                            </form>
-            
-                                            <form method="post" action="/digiIssuer/lost/<%=st._id%>/<%=st.BorrowedBooks1[j]._id%>/<%=book._id%>">
-                                                <button class="ui red inverted button">LostIt</button>
-                                            </form>
-                                            <form method="post" action="/digiIssuer/showBook/<%=st.BorrowedBooks1[j++]._id%>">
-                                                <button class="ui purple inverted button">Details</button>
-                                            </form>
-                                        </div><p></p>
+                                       
                                        
                                     </div>
                                 </div>

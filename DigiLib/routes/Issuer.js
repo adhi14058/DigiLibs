@@ -81,7 +81,164 @@ router.post('/digiIssuer/issue/Credentials', function (req, res) {
 //=================================================================================
 //=================================================================================
 
-//Reserve books show page
+//Reserve books for Student   
+
+
+router.get('/digiIssuer/reserveStudent/:tid',function(req,res){
+    Student.findById(req.params.tid).populate('BorrowedBooks').populate('BorrowedBooks1').exec(function(err,stu){
+        Reserved_Book.find({status:2,InTheHandsOfStudent:req.params.tid}).sort({Identification_no: 'asc'}).populate('bookRef1').populate('bookRef2').exec(function(err,books){
+            console.log(books)
+            PresentlyBorrow.find({InTheHandsOfStudent:stu._id},function(err,pb){
+                pb.forEach(function(tuple){
+                    now=new Date()
+                    tuple.Fine=(Math.max(0,(Math.ceil((now-tuple.Expected_return_date)/(1000*3600*24)))));
+                    tuple.save();
+                })
+                stu.BorrowedBooks.forEach(function(tuple){
+                    now=new Date()
+                    PresentlyBorrow.findOne({Identification_no:tuple.Identification_no},function(err,pb){
+                        tuple.Fine=(Math.max(0,(Math.ceil((now-pb.Expected_return_date)/(1000*3600*24)))));
+                        tuple.save();
+                    })
+                })
+                setTimeout(function(){
+                    res.render("index/issuerReservedBookPageStudent",{st:stu,books:books,step:1,pb:pb})
+                }, 1000)
+                
+            })
+        })
+    })
+})
+
+router.post('/digiIssuer/reserveStudent/:tid',function(req,res){
+    console.log('inside')
+    BookReference2.findOne({Identification_no:req.body.unique_id},function(err,bookref2){
+        if(!bookref2){
+            return res.redirect("back");
+        }
+        BookReference1.findOne({ISBN:bookref2.ISBN},function(err,bookref1){
+                 Student.findById(req.params.tid,function(err,st){
+                    res.redirect('/digiIssuer/reserveStudent/'+req.params.tid+'/'+bookref1._id+'/'+bookref2._id)
+                 })
+        })
+     })
+})
+    
+
+    //issuer display Student page and book he is going to issue  
+router.get('/digiIssuer/reserveStudent/:sid/:b1id/:b2id',function(req,res){
+   
+    Student.findById(req.params.sid).populate('BorrowedBooks').populate('BorrowedBooks1').exec(function(err,stu){
+        BookReference1.findById(req.params.b1id,function(err,b1){
+            BookReference2.findById(req.params.b2id,function(err,b2){
+                Reserved_Book.find({status:2,InTheHandsOfStudent:req.params.sid}).sort({Identification_no: 'asc'}).exec(function(err,books){
+                    PresentlyBorrow.find({InTheHandsOfStudent:stu._id},function(err,pb){
+                        pb.forEach(function(tuple){
+                            now=new Date()
+                            tuple.Fine=(Math.max(0,(Math.ceil((now-tuple.Expected_return_date)/(1000*3600*24)))));
+                            tuple.save();
+                        })
+                        stu.BorrowedBooks.forEach(function(tuple){
+                            now=new Date()
+                            PresentlyBorrow.findOne({Identification_no:tuple.Identification_no},function(err,pb){
+                                tuple.Fine=(Math.max(0,(Math.ceil((now-pb.Expected_return_date)/(1000*3600*24)))));
+                                tuple.save();
+                               
+                            })
+                        })
+                        flag=1;
+                        stu.BorrowedBooks.forEach(function(item){
+                            if(item.ISBN==b1.ISBN){
+                                flag=0;
+                                
+                            }
+                        })
+
+                        if(flag==1){
+                           
+                            setTimeout(function(){
+                                res.render("index/issuerReservedBookPageStudent",{st:stu,bookref1:b1,bookref2:b2,books:books,step:2,pb:pb})
+                            }, 1000)
+                        }else{
+                            setTimeout(function(){
+                                res.render("index/issuerReservedBookPageStudent",{st:stu,bookref1:b1,bookref2:b2,books:books,step:3,pb:pb})
+                            }, 1000)
+
+                        }
+                    })
+                })
+            })
+        })
+    })
+})
+
+//Student  
+router.post('/digiIssuer/reserveStudent/:sid/:b1id/:b2id',function(req,res){
+    Student.findById(req.params.sid).populate('BorrowedBooks').populate('BorrowedBooks1').exec(function(err,stu){
+        BookReference1.findById(req.params.b1id,function(err,bookr1){
+            BookReference2.findById(req.params.b2id,function(err,bookr2){
+                flag=1;
+                stu.BorrowedBooks.forEach(function(item){
+                    if(item.ISBN==bookr1.ISBN){
+                        flag=0;
+                        res.redirect('/digiIssuer/issueStudent/'+stu._id)
+                    }
+                })
+                if(flag==1){
+                var numberOfDaysToAdd = 15;
+                d= new Date();
+                PresentlyBorrow.create({
+                    Identification_no:bookr2.Identification_no,
+                    Rack_id:bookr2.Rack_id,
+                    Date_when_borrowed: new Date(),
+                    Expected_return_date:d.setDate(d.getDate() + numberOfDaysToAdd),
+                    InTheHandsOfStudent:stu._id,
+                    bookRef1:bookr1._id,
+                    bookRef2:bookr2._id,
+                    Fine:0
+
+                },function(err,prbr){
+                    if(err){
+                        console.log(err)
+                    }else{
+                        stu.BorrowedBooks.push(bookr2._id);
+                        stu.BorrowedBooks1.push(bookr1._id);
+                        stu.save();
+                        bookr2.InTheHandsOfStudent=stu._id;
+                        bookr2.In_status=0;
+                        bookr2.Fine=0;
+                        bookr2.save();
+                        bookr1.No_books_borrowed+=1;
+                        bookr1.No_times_book_borrowed+=1;
+                        bookr1.No_books_reserved-=1;
+                        bookr1.save();
+                        Reserved_Book.findOne({InTheHandsOfStudent:stu._id, bookRef1:bookr1._id, bookRef2:bookr2._id , status:{$ne: 3}},function(err,rb){
+                            rb.status=3;
+                            rb.save();
+                            res.redirect('/digiIssuer/reserveStudent/'+stu._id)
+                        })
+                    }
+                })
+            }
+            })
+        
+        })
+    })
+})
+
+
+
+
+//=================================================================================
+//=================================================================================
+//=================================================================================
+//=================================================================================
+//=================================================================================
+//=================================================================================
+//=================================================================================
+//=================================================================================
+
+//Reserve books for Teachers
 
 router.get('/digiIssuer/reserve/Credentials', function (req, res) {
     res.render('issuer/issuerReserveGetCredentials');
@@ -95,15 +252,15 @@ router.post('/digiIssuer/reserve/Credentials', function (req, res) {
                 Roll_no: req.body.rollno
             }, function (err, st) {
                 if (err) {
-                    res.redirect('/digiIssuer/reserve/Credentials')
+                    res.redirect('/digiIssuer/reserveStudent/Credentials')
                 } else {
                     BookReference2.find({
                         In_status: 1
                     }, function (err, books) {
                         if(st===null){
-                            res.redirect('/digiIssuer/reserve/Credentials')
+                            res.redirect('/digiIssuer/reserveStudent/Credentials')
                         }else{
-                        res.redirect('/digiIssuer/reserve/' + st._id)
+                        res.redirect('/digiIssuer/reserveStudent/' + st._id)
                         }
                     })
                 }
@@ -278,7 +435,7 @@ router.post('/digiIssuer/reserveTeacher/:sid/:b1id/:b2id',function(req,res){
 //=================================================================================
 //=================================================================================
 //=================================================================================
-//issuer display student page
+//issuer display Teachers page
 router.get('/digiIssuer/issueTeacher/:tid',function(req,res){
     Teacher.findById(req.params.tid).populate('BorrowedBooks').populate('BorrowedBooks1').exec(function(err,stu){
         BookReference2.find({In_status:1}).sort({Identification_no: 'asc'}).exec(function(err,books){
@@ -305,7 +462,7 @@ router.get('/digiIssuer/issueTeacher/:tid',function(req,res){
 })
 
 
-//issuer display student page and post for book to be shown
+//issuer display teachers page and post for book to be shown
 router.post('/digiIssuer/issueTeacher/:tid',function(req,res){
     BookReference2.findOne({Identification_no:req.body.unique_id},function(err,bookref2){
         if(!bookref2){
@@ -320,7 +477,7 @@ router.post('/digiIssuer/issueTeacher/:tid',function(req,res){
     })
 })
 
-//issuer display student page and book he is going to issue
+//issuer display teachers page and book he is going to issue
 router.get('/digiIssuer/issueTeacher/:sid/:b1id/:b2id',function(req,res){
     Teacher.findById(req.params.sid).populate('BorrowedBooks').populate('BorrowedBooks1').exec(function(err,stu){
         BookReference1.findById(req.params.b1id,function(err,b1){
@@ -786,14 +943,37 @@ router.post('/digiIssuer/return/:sid/:b1id/:b2id',function(req,res){
                         stu.BorrowedBooks.splice(stu.BorrowedBooks.indexOf(bookr2._id),1);
                         stu.BorrowedBooks1.splice(stu.BorrowedBooks1.indexOf(bookr1._id),1);
                         stu.save();
-                         bookr2["InTheHandsOfStudent"]=undefined;
+                        if(bookr1.ReserveCount==0){     
+                                bookr2["InTheHandsOfStudent"]=undefined;
+                                bookr2.Fine=undefined;
+                                bookr1.No_books_borrowed-=1;
+                                bookr1.No_books_reserved+=1;       
                         bookr2.In_status=1;
-                        bookr2.Fine=undefined;
                         bookr2.save();
-                        bookr1.No_books_borrowed-=1;
                         bookr1.No_books_inside_library+=1;
                         bookr1.save();
                         res.redirect('/digiIssuer/issue/'+stu._id)
+                        }else{
+                        Reserved_Book.findOne({bookRef1:bookr1._id, bookRef2:{$exists : false}},function(err,rb){
+                            if(err){
+                                console.log(err)
+                            }else{
+                                bookr2["InTheHandsOfStudent"]=undefined;
+                                bookr2.Fine=undefined;
+                                bookr1.No_books_borrowed-=1;
+                                bookr1.No_books_reserved+=1; 
+                            rb.bookRef2=bookr2._id;
+                            rb.status=2; 
+                            rb.save();
+                            bookr1.ReserveCount-=1;
+                            bookr1.save();
+                            console.log(bookr1.ReserveCount)
+                            bookr2.In_status=2;
+                            bookr2.save();
+                            res.redirect('/digiIssuer/issue/'+stu._id)
+                            }
+                        })
+                    }
                     })
 
                 })

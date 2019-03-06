@@ -151,22 +151,7 @@
                                         <span class=" ui medium black header">Publisher:&ensp;&ensp;&ensp;<%=st.BorrowedBooks1[j].Publisher_name%></span>
                                         <span <%if(book.Fine>0){%>style="color:red;"<%}else{%>style="color:green;"<%}%> class=" ui medium black header">Fine:&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;<%=book.Fine%> Rs</span>
                                         <p></p>
-                                        <div style="margin:10px auto; text-align:center;" class="ui buttons">
-                                            <form method="post" action="/digiIssuer/return/<%=st._id%>/<%=st.BorrowedBooks1[j]._id%>/<%=book._id%>">
-                                                <button class="ui inverted green button">Return</button>
-                                            </form>
-            
-                                            <form method="post" action="/digiIssuer/reissue/<%=st._id%>/<%=st.BorrowedBooks1[j]._id%>/<%=book._id%>">
-                                                <button type="submit" class="ui blue inverted button ">ReIssue</button>
-                                            </form>
-            
-                                            <form method="post" action="/digiIssuer/lost/<%=st._id%>/<%=st.BorrowedBooks1[j]._id%>/<%=book._id%>">
-                                                <button class="ui red inverted button">LostIt</button>
-                                            </form>
-                                            <form method="post" action="/digiIssuer/showBook/<%=st.BorrowedBooks1[j++]._id%>">
-                                                <button class="ui purple inverted button">Details</button>
-                                            </form>
-                                        </div><p></p>
+                                       
                                        
                                     </div>
                                 </div>
