@@ -163,7 +163,7 @@
                                             <form method="post" action="/digiIssuer/lost/<%=st._id%>/<%=st.BorrowedBooks1[j]._id%>/<%=book._id%>">
                                                 <button class="ui red inverted button">LostIt</button>
                                             </form>
-                                            <form method="post" action="/digiIssuer/showBook/<%=st.BorrowedBooks1[j++]._id%>">
+                                            <form method="get" action="/showBookDetails/<%=st.BorrowedBooks1[j++]._id%>/<%=book._id%>">
                                                 <button class="ui purple inverted button">Details</button>
                                             </form>
                                         </div><p></p>

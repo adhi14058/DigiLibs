@@ -85,8 +85,26 @@ router.get('/register',function(req,res){
     res.render('index/register');    
 })
 
-router.get('/showbook',function(req,res){
-    res.render('index/example_show_book')
+
+
+router.get('/showBookDetails/:id1/:id2',function(req,res){
+    BookReference1.findById(req.params.id1,function(err,book1){
+        BookReference2.findById(req.params.id2,function(err,book2){
+            BookReference2.find({ISBN:book1.ISBN},function(err,books){
+                PresentlyBorrow.find({}).populate('bookRef1').populate('bookRef2').populate('InTheHandsOfStudent').populate('InTheHandsOfTeacher').exec(function(err,pb){
+                    var newPb=[]
+                    pb.forEach(item=>{
+                        if(item.bookRef1.ISBN==book1.ISBN){
+                            newPb.push(item)
+                        }
+                    })
+                    setTimeout(() => {
+                        res.render('index/example_show_book',{book1:book1,book2:book2,books:books,pb:newPb})
+                    }, 1000);
+                })
+            })
+        })
+    })
 })
 
 

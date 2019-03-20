@@ -8,15 +8,15 @@
                 <div class="ui column">
                     <div class="ui fluid card">
                 <div class="ui content" >
-                  <h1 style="text-align:center">Book Name</h1>
-                  <span class=" ui large header">ISBN: </span>
-                  <span class=" ui large header">Subject_name: </span>
-                  <span class=" ui large header">Book_edition: </span>
-                  <span class=" ui large header">Author_name: </span>
-                  <span class=" ui large header">Publisher_name: </span>
-                  <span class=" ui large header">Price: </span>
-                  <span class=" ui large header">Subject_id: </span>
-                  <span class=" ui large header">Rack_id: </span>
+                  <h1 style="text-align:center"><%=book1.Book_name%></h1>
+                  <span class=" ui large header">ISBN:&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp; <%=book1.ISBN%></span>
+                  <span class=" ui large header">Subject_name:&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;<%=book1.Subject_name%>  </span>
+                  <span class=" ui large header">Book_edition:&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;<%=book1.Book_edition%> </span>
+                  <span class=" ui large header">Author_name:&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;<%=book1.Author_name%> </span>
+                  <span class=" ui large header">Publisher_name:&ensp;&ensp;&ensp;&ensp;<%=book1.Publisher_name%> </span>
+                  <span class=" ui large header">Price:&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp; <%=book1.Price%></span>
+                  <span class=" ui large header">Subject_id: &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp; &ensp;<%=books[0].Subject_id%></span>
+                  <span class=" ui large header">Rack_id:&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp; <%=books[0].Rack_id%></span>
                 </div></div>
             </div>
             </div>
@@ -24,19 +24,19 @@
 
             <div style="width:100%; margin-top:20px">
             <div class="ui four column grid">
-               <%for(i=0;i<=9;i++){%> 
+               <%books.forEach(tuple=>{%> 
                 <div  class="ui column">
                   <div class="ui fluid card">
                     <div style="background-color:lightblue;color:white" class="ui content">
-                      <span class=" ui medium header">Identification: </span>
-                      <span class=" ui medium header">Book_id: </span>
-                      <span class=" ui medium header">Date_bought: </span>
-                      <span class=" ui medium header">In_status: </span>
-                      <span class=" ui medium header">Borrowed by: </span>
+                      <span class=" ui medium header">Identification:&ensp;&ensp;&ensp;&ensp; <%=tuple.Identification_no%></span>
+                      <span class=" ui medium header">Book_id:&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp; <%=tuple.Book_id%></span>
+                      <span class=" ui medium header">Date_bought:&ensp;&ensp;&ensp;&ensp; <%=tuple.Date_first_inside_lib.getDate()%> / <%=tuple.Date_first_inside_lib.getMonth()+1%> / <%=tuple.Date_first_inside_lib.getFullYear()%></span>
+                      <span class=" ui medium header">In_status:&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp; <%if(tuple.In_status==0){%>Borrowed<%}else{%>Available or lost<%}%></span>
+                      
                     </div>
                   </div>
                 </div>
-                <%}%>
+                <%})%>
               </div>
             </div>
             <!-- stats -->
@@ -44,7 +44,7 @@
                 <div class="ui four statistics">
                 <div class="ui inverted statistic">
                   <div class="value">
-                        <i class="heart outline sign icon"></i>  54
+                        <i class="heart outline sign icon"></i>  <%=book1.No_books_bought%>
                   </div>
                   <div class="label">
                        #BOOKS BOUGHT
@@ -52,7 +52,7 @@
                 </div>
                 <div class="ui red inverted statistic">
                   <div class="value">
-                        <i class="smile outline sign icon"></i>27
+                        <i class="smile outline sign icon"></i><%=book1.No_books_present%>
                   </div>
                   <div class="label">
                     #BOOKS PRESENT TOTALLY
@@ -60,7 +60,7 @@
                 </div>
                 <div class="ui orange inverted statistic">
                   <div class="value">
-                        <i class="exclamation sign icon"></i> 8
+                        <i class="exclamation sign icon"></i> <%=book1.No_books_lost%>
                   </div>
                   <div class="label">
                     #BOOKS LOST
@@ -68,7 +68,7 @@
                 </div><p></p><p></p>
                 <div class="ui yellow inverted statistic">
                   <div class="value">
-                        <i class="eye icon"></i> 28
+                        <i class="eye icon"></i> <%=book1.No_books_inside_library%>
                   </div>
                   <div class="label">
                     #BOOKS INSIDE LIBRARY
@@ -76,7 +76,7 @@
                 </div>
                 <div class="ui olive inverted statistic">
                   <div class="value">
-                        <i class="eye slash sign icon"></i> 7
+                        <i class="eye slash sign icon"></i> <%=book1.No_books_borrowed%>
                   </div>
                   <div class="label">
                     #BOOKS BORROWED
@@ -84,7 +84,7 @@
                 </div>
                 <div class="ui  green inverted statistic">
                     <div class="value">
-                            <i class="flag outline sign icon"></i>14
+                            <i class="flag outline sign icon"></i><%=book1.No_times_book_borrowed%>
                     </div>
                     <div class="label">
                       #TIMES BOOK TAKEN
