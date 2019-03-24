@@ -2,42 +2,24 @@
   
     <div class="container" style="margin-top:70px;">
         <div class="ui segment">
-            <h2 class="ui header" style="text-align: center;">
-                VIEW DETAILS
-            </h2>
-            <div class="ui section divider"></div>
-            <h3 class="ui header">VIEW</h3>
-            <form action="">
-            <button class="ui button" id="name" onclick="ActiveClassName()">
-                STUDENTS
-            </button>
-            <button class="ui button" id="author" onclick="ActiveClassAuthor()">
-                TEACHERS
-            </button>
-            <h3 class="ui header">SEARCH USING</h3>
+                <form action="/studentdetails"method="POST">  
+            <h3 class="ui header">SEARCH USING NAME/ ROLL NO/ EMAIL-ID</h3>
             <h3 class="ui header">NAME</h3>
             <div class="ui icon input" style="width:100%;">
-                <input type="text" placeholder="Search...">
+                <input type="text" placeholder="Search..." name="name">
                 <i class="search icon"></i>
             </div>
             <br>
-            <h3 class="ui header">ID</h3>
+            <h3 class="ui header">ROLL NO</h3>
             <div class="ui icon input" style="width:100%;">
-                <input type="text" placeholder="Search...">
+                <input type="text" placeholder="Search..." name="roll_no">
                 <i class="search icon"></i>
             </div>
             <br>
             <h3 class="ui header">EMAIL ID</h3>
             <br>
             <div class="ui icon input" style="width:100%;">
-                <input type="text" placeholder="Search...">
-                <i class="search icon"></i>
-            </div>
-            <br>
-            <h3 class="ui header">PHONE #</h3>
-            <br>
-            <div class="ui icon input" style="width:100%;">
-                <input type="text" placeholder="Search...">
+                <input type="text" placeholder="Search..."name="email">
                 <i class="search icon"></i>
             </div>
             <br>
@@ -50,18 +32,20 @@
                 <thead>
                     <tr>
                         <th>NAME</th>
-                        <th>ID</th>
+                        <th>ROLL NO</th>
                         <th>EMAIL ID</th>
-                        <th>PHONE #</th>
+                        <th>PHONE </th>
+                        <th>      </th>
                     </tr>
                 </thead>
                 <tbody>
-                        <% student.forEach(function(st){ %>
+                        <% st.forEach(function(st){ %>
                     <tr>
                         <td><%= st.St_name %></td>
                         <td><%= st.Roll_no %></td>
                         <td><%= st.St_email %></td>
                         <td><%= st.St_phone_no %></td>
+                        <td><a href="/studentdetails/<%= st._id %>" class="ui green button">View more details</a><br><br> </td>
                     </tr>
                       <% }) %>
                 </tbody>

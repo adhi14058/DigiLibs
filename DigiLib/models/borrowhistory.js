@@ -9,12 +9,12 @@ var borrowhistorySchema= new mongoose.Schema({
     bookRef1:
         {
             type:mongoose.Schema.Types.ObjectId,
-            ref:"BookReference2"
+            ref:"BookReference1"
         },
     bookRef2:
         {
             type:mongoose.Schema.Types.ObjectId,
-            ref:"BookReference1"
+            ref:"BookReference2"
         },
         InTheHandsOfStudent:{
             type:mongoose.Schema.Types.ObjectId,

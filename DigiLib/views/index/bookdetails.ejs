@@ -2,13 +2,13 @@
  
   <div class="container" style="margin-top:70px;">
     <div class="ui segment">
-      <form action="">
+      <form action="/bookdetails"method="post">
         <h3 class="ui header">SEARCH USING</h3>
         <h3 class="ui header">NAME</h3>
         <!-- <br> -->
         <!-- <br> -->
         <div class="ui icon input" style="width:100%;">
-          <input type="text" placeholder="Search...">
+          <input type="text" placeholder="Search..."name="name">
           <i class="search icon"></i>
         </div>
         <br>
@@ -17,20 +17,12 @@
         <!-- <br> -->
         <!-- <br> -->
         <div class="ui icon input" style="width:100%;">
-          <input type="text" placeholder="Search...">
+          <input type="text" placeholder="Search..."name='author'>
           <i class="search icon"></i>
         </div>
         <br>
         <br>
-        <h3 class="ui header">BOOK ID</h3>
-        <!-- <br> -->
-        <!-- <br> -->
-        <div class="ui icon input" style="width:100%;">
-          <input type="text" placeholder="Search...">
-          <i class="search icon"></i>
-        </div>
-        <br>
-        <br>
+      
         <button class="ui button">SUBMIT</button>
       </form>
       <div class="ui section divider"></div>
@@ -42,6 +34,7 @@
             <th>BOOK NAME</th>
             <th>AUTHOR NAME</th>
             <th>BOOK EDITION</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -51,6 +44,7 @@
                         <td><%= st.Book_name %></td>
                         <td><%= st.Author_name %></td>
                         <td><%= st.Book_edition %></td>
+                        <td><a href="/showBookDetails/<%=st._id%>" class="ui green button">View more details</a><br><br> </td>
                     </tr>
                       <% }) %>
           

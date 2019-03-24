@@ -1,0 +1,42 @@
+<%include ../partials/header%>
+ 
+  <div class="container" style="margin-top:70px;">
+    <div class="ui segment">
+      
+      
+      <table class="ui padded table">
+        <thead>
+          <tr>
+            <th>BOOK NAME</th>
+            <th>IDENTIFICATION NO</th>
+            <th>NAME</th>
+            <th>BORROW DATE</th>
+            <th>RETURN DATE</th>
+            <th>FINE</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+                <% book.forEach(function(st){ %>
+                    <tr>
+                        <td><%= st.bookRef1.Book_name %></td>
+                        <td><%= st.Identification_no %></td>
+                        <% if(st.InTheHandsOfStudent === undefined) {%>
+                        <td><%= st.InTheHandsOfTeacher.Fa_name %></td>
+                       <% }else{ %>
+
+                        <td><%= st.InTheHandsOfStudent.St_name %></td>
+                        <% } %>
+                        <td><%= st.Date_when_borrowed.getDate()%>/<%=st.Date_when_borrowed.getMonth()%>/<%=st.Date_when_borrowed.getFullYear()%> %></td>
+                        <td><%= st.Expected_return_date.getDate()%>/<%=st.Expected_return_date.getMonth()%>/<%=st.Expected_return_date.getFullYear()%> %></td>
+                        <td><%= st.Fine%></td>
+                        <td><a href="/showBookDetails/<%=st.bookRef1._id%>/<%=st.bookRef2%>" class="ui green button">View more details</a><br><br> </td>
+                    </tr>
+                      <% }) %>
+          
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+  <%include ../partials/footer%>

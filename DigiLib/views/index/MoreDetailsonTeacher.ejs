@@ -1,4 +1,7 @@
-<%include ../partials/header%>
+<%include ../partials/header%> 
+
+
+
 
 <!-- Page Container -->
 <div class="w3-content w3-margin-top" style="max-width:1400px;">
@@ -20,6 +23,9 @@
           <div class="ui section divider"></div>
           <p>E-MAIL</p>
           <p> <%=teacherObj.Fa_email %> </p>
+          <div class="ui section divider"></div>
+          <p>PHONE NUMBER</p>
+          <p> <%=teacherObj.Fa_phone_no %> </p>
           <!-- </div> -->
         </div>
 
@@ -44,9 +50,8 @@
 
         
         <%} else { var j=0%>
-
-        <div class="ui three column grid">
         <%teacherObj.BorrowedBooks.forEach(function(book){%>
+        <div class="ui three column grid">
           <div class="column">
             <div style="font-size:1.2em;height:auto;" class="ui fluid card">
               <div class="image">
@@ -69,9 +74,8 @@
               </div>
             </div>
           </div>
-          <%})%>
         </div>
-     
+        <%})%>
         <%}%>
               </div>
       </div>
@@ -89,16 +93,15 @@
   
       
           <%} else { var k=0      %>
-       
+            <%borrowedhistory.forEach(function(book){%>
           <div class="ui three column grid">
-          <%borrowedhistory.forEach(function(book){%>
             <div class="column">
               <div style="font-size:1.2em;height:auto;" class="ui fluid card">
                 <div class="image">
                   <img style="height:400px;" src="<%=bookdetails[k].b1.Image%>">
                 </div>
                 <div class="content">
-                  <h3 class=" ui centered large blue header"><%=bookdetails[k].b1.Book_name%></h3>
+                  <h3 class=" ui centered huge blue header"><%=bookdetails[k].b1.Book_name%></h3>
                   <span
                     class=" ui medium black header">ISBN:&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;<%=bookdetails[k].b1.ISBN%></span>
                 
@@ -106,7 +109,7 @@
                   <span
                     class=" ui medium black header">Author:&ensp;&ensp;&ensp;&ensp;&ensp;<%=bookdetails[k].b1.Author_name%></span>
                   <span
-                    class=" ui medium black header">Publisher:&ensp;&ensp;&ensp;<%=bookdetails[k++].b1.Publisher_name%></span>
+                    class=" ui medium black header">Publisher:&ensp;&ensp;&ensp;<%=bookdetails[k].b1.Publisher_name%></span>
                  
                    
                     <span class=" ui medium black header">Unique ID:&ensp;&ensp;&ensp;<%=book.Identification_no%></span>
@@ -121,11 +124,9 @@
                     Rs</span> <p></p>
                 </div>
               </div>
-           
             </div>
-            <%})%>
           </div>
-          
+          <%})%>
          
           <%}%>
           </div>

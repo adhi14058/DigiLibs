@@ -52,13 +52,14 @@ app.use(function(req,res,next){
     if(req.user && req.user.student){
         Student.findById(req.user.student,function(err,stu){
             res.locals.loggedInStudent=stu.St_name;
-           
+            res.locals.loggedInStudentId=req.user.student;
             next();
         })
     }else if(req.user && req.user.teacher){
         Teacher.findById(req.user.teacher,function(err,teacher){
             res.locals.loggedInTeacher=teacher.Fa_name;
-            next()
+            res.locals.loggedInTeacherId=req.user.teacher;
+            next();
         })
     }else{
     next();

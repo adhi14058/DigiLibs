@@ -1,0 +1,148 @@
+<%include ../partials/header%> 
+
+
+
+
+
+<!-- Page Container -->
+<div class="w3-content w3-margin-top" style="max-width:1400px;">
+  <!-- The Grid -->
+  <div class="w3-row-padding">
+    <h1 class="ui huge centered  header"> STUDENT DETAILS</h1>
+    <!-- Left Column -->
+    <!-- <div class="w3-third"> -->
+    <!-- <div class="ui four column grid"> -->
+    <!-- <div class="w3-white w3-text-grey w3-card-4"> -->
+    <div class="ui center aligned container" style="width:70vw;height:auto;">
+      <div class="ui segment">
+        <div class="w3-container" style="height: auto; font-family: 'Libre Franklin';font-size:1.2em;left:50%;">
+          <p>NAME</p>
+          <p> <%=studentObj.St_name %> </p>
+          <div class="ui section divider"></div>
+          <p>ROLL NUMBER</p>
+          <p> <%=studentObj.Roll_no %> </p>
+          <div class="ui section divider"></div>
+          <p>E-MAIL</p>
+          <p> <%=studentObj.St_email %> </p>
+          <div class="ui section divider"></div>
+          <p>PHONE NUMBER</p>
+          <p> <%=studentObj.St_phone_no %> </p>
+          <!-- </div> -->
+        </div>
+
+        <!-- </div> -->
+      </div><br>
+      <!-- End Left Column -->
+    </div>
+
+
+
+
+    <div style="width:90%; margin: 80px auto;">
+
+
+      <h1 class="ui large centered header">BOOKS CURRENTLY TAKEN</h1>
+      <div >
+        <% if( studentObj.BorrowedBooks.length == 0){ %>
+        <div class="content">
+          <!-- <h1 class="ui center aligned header"> No Book Borrowed</h1> -->
+          <h2 class="ui medium header" style="align-content: center;">NO BOOKS TAKEN</h1>
+        </div>
+
+
+        <%} else { var j=0%>
+        
+        <div class="ui three column grid">
+       
+          <div class="column">
+          <%studentObj.BorrowedBooks.forEach(function(book){%>
+            <div style="font-size:1.2em;height:auto;" class="ui fluid card">
+              <div class="image">
+                <img style="height:400px;" src="<%=studentObj.BorrowedBooks1[j].Image%>">
+              </div>
+              <div class="content">
+                <h3 class=" ui centered huge blue header"><%=studentObj.BorrowedBooks1[j].Book_name%></h3>
+                <span
+                  class=" ui medium black header">ISBN:&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;<%=book.ISBN%></span>
+                <span class=" ui medium black header">Unique ID:&ensp;&ensp;&ensp;<%=book.Identification_no%></span>
+                <span class=" ui medium black header">Book_id: &ensp;&ensp;&ensp;&ensp;<%=book.Book_id%></span>
+                <span
+                  class=" ui medium black header">Author:&ensp;&ensp;&ensp;&ensp;&ensp;<%=studentObj.BorrowedBooks1[j].Author_name%></span>
+                <span
+                  class=" ui medium black header">Publisher:&ensp;&ensp;&ensp;<%=studentObj.BorrowedBooks1[j++].Publisher_name%></span>
+                <span <%if(book.Fine>0){%>style="color:red;" <%}else{%>style="color:green;"
+                  <%}%> class=" ui medium black header">Fine:&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;<%=book.Fine%>
+                  Rs</span> <p></p>
+              </div>
+            </div>
+            <%})%>
+          </div>
+       
+        </div>
+       
+        <%}%>
+        </div>
+
+    </div>
+    <div style="width:90%; margin: 80px auto;">
+
+     
+      <h1 class="ui large centered header">BORROWED BOOK HISTORY</h1>
+      <div style="font-size:1.2em;height:auto;height:auto; ">
+        <% if( borrowedhistory.length == 0){ %>
+        <div class="content">
+          <!-- <h1 class="ui center aligned header"> No Book Borrowed</h1> -->
+          <h2 class="ui medium header" style="align-content: center;">NO BOOKS TAKEN</h1>
+        </div>
+
+    
+        <%} else { var k=0      %>
+       
+        <div class="ui three column grid">
+           <%borrowedhistory.forEach(function(book){%>
+          <div class="column">
+            <div style="font-size:1.2em;height:auto;" class="ui fluid card">
+              <div class="image">
+                <img style="height:400px;" src="<%=bookdetails[k].b1.Image%>">
+              </div>
+              <div class="content">
+                <h3 class=" ui centered huge blue header"><%=bookdetails[k].b1.Book_name%></h3>
+                <span
+                  class=" ui medium black header">ISBN:&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;<%=bookdetails[k].b1.ISBN%></span>
+              
+                <span class=" ui medium black header">Subject name: &ensp;&ensp;&ensp;&ensp;<%=bookdetails[k].b1.Subject_name%></span>
+                <span
+                  class=" ui medium black header">Author:&ensp;&ensp;&ensp;&ensp;&ensp;<%=bookdetails[k].b1.Author_name%></span>
+                <span
+                  class=" ui medium black header">Publisher:&ensp;&ensp;&ensp;<%=bookdetails[k].b1.Publisher_name%></span>
+               
+                 
+                  <span class=" ui medium black header">Unique ID:&ensp;&ensp;&ensp;<%=book.Identification_no%></span>
+                  <span
+                  class=" ui medium black header">Date when borrowed:&ensp;&ensp;&ensp;&ensp;&ensp;<%=book.Date_when_borrowed.getDate()%>/<%=book.Date_when_borrowed.getMonth()%>/<%=book.Date_when_borrowed.getFullYear()%></span>
+                <span
+                  class=" ui medium black header">Actual return date:&ensp;&ensp;&ensp;<%=book.Actual_return_date.getDate()%>/<%=book.Actual_return_date.getMonth()%>/<%=book.Actual_return_date.getFullYear()%></span>
+                  <span
+                  class=" ui medium black header">Expected return date:&ensp;&ensp;&ensp;<%=book.Expected_return_date.getDate()%>/<%=book.Expected_return_date.getMonth()%>/<%=book.Expected_return_date.getFullYear()%></span>
+                <span <%if(book.Fine>0){%>style="color:red;" <%}else{%>style="color:green;"
+                  <%}%> class=" ui medium black header">Fine:&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;<%=book.Fine%>
+                  Rs</span> <p></p>
+              </div>
+            </div>
+          </div>
+          <%})%>
+        </div>
+        
+       
+        <%}%>
+        </div>
+
+    </div>
+
+
+
+</div>
+
+</div>
+</div>
+<%include ../partials/footer%>

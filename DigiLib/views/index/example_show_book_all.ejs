@@ -3,7 +3,7 @@
 <div style='margin-top:70px'></div>
 
       <div style="padding:20px;">
-            <img style="float:left;" width="40%" height="600px" src="<%=book1.Image%>"alt="" srcset="">
+            <img style="float:left;" width="40%" height="600px" src="<%=book1.Image%>" alt="" srcset="">
             <div style="padding:20px; background:white;width:60%; float:right; height:600px;" id="details1">
                 <div class="ui column">
                     <div class="ui fluid card">
@@ -27,15 +27,6 @@
                <%books.forEach(tuple=>{%> 
                 <div  class="ui column">
                   <div class="ui fluid card">
-                    <%if(tuple.Identification_no === book2.Identification_no){%>
-                    <div style="background-color: violet;color:white" class="ui content">
-                      <span class=" ui medium header">Identification:&ensp;&ensp;&ensp;&ensp; <%=tuple.Identification_no%></span>
-                      <span class=" ui medium header">Book_id:&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp; <%=tuple.Book_id%></span>
-                      <span class=" ui medium header">Date_bought:&ensp;&ensp;&ensp;&ensp; <%=tuple.Date_first_inside_lib.getDate()%> / <%=tuple.Date_first_inside_lib.getMonth()+1%> / <%=tuple.Date_first_inside_lib.getFullYear()%></span>
-                      <span class=" ui medium header">In_status:&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp; <%if(tuple.In_status==0){%>Borrowed<%}else{%>Avail/ lost<%}%></span>
-                      
-                    </div>
-                    <%}  else{%>
                     <div style="background-color:lightblue;color:white" class="ui content">
                       <span class=" ui medium header">Identification:&ensp;&ensp;&ensp;&ensp; <%=tuple.Identification_no%></span>
                       <span class=" ui medium header">Book_id:&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp; <%=tuple.Book_id%></span>
@@ -43,7 +34,6 @@
                       <span class=" ui medium header">In_status:&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp; <%if(tuple.In_status==0){%>Borrowed<%}else if(tuple.In_status==1){%>Available<%}else{%> lost<%}%></span>
                       
                     </div>
-                    <%}%>
                   </div>
                 </div>
                 <%})%>

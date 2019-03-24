@@ -10,7 +10,11 @@
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
         crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto'>
+    <link href="https://fonts.googleapis.com/css?family=Libre+Franklin" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Merienda" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
         .pad {
             padding-right: 7px !important;
@@ -24,6 +28,16 @@
         .lol {
             height: 500px;
         }
+        html,
+        body,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+        font-family: "Libre Franklin", sans-serif
+    }
     </style>
 </head>
 <body>
@@ -33,8 +47,12 @@
                 <div class="ui  button">
                     <a href='/'><i style="font-size:1.5em;" class="book icon"></i>DiGiLiBs</a>
                 </div>
+                
             </div>
             <div class="right menu">
+            <div class="item pad">
+                    <a class="ui inverted mini yellow button" href="/digiSearch">Search</a>
+                </div>
             <% if(userLoggedIn) {%>
             <% if(userLoggedIn.username=="admin") {%>
             <div class="item pad">
@@ -48,12 +66,13 @@
             <%}%>
             <% if(userLoggedIn.student) {%>
             <div class="item pad">
-            <a class="ui inverted mini red button">welcome <%=loggedInStudent%></a>
+            <a class="ui inverted mini red button" href="/digiStudentProfile/<%= loggedInStudentId %>">welcome <%=loggedInStudent%></a>
         </div>
             <%}%>
             <% if(userLoggedIn.teacher) {%>
             <div class="item pad">
-            <a class="ui inverted mini red button">welcome <%=loggedInTeacher%></a>
+            <a class="ui inverted mini red button" href="/digiTeacherProfile/<%= loggedInTeacherId %>">welcome <%=loggedInTeacher%></a>
+            
         </div>
             <%}%>
                 <%}%>
@@ -74,7 +93,7 @@
                     <a class="ui inverted mini green button" href="/logout">LOGOUT</a>
                 </div>
                 <%}%>
-    
+
             </div>
         </div>
     
